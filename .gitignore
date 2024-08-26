@@ -1,0 +1,55 @@
+# IntelliJ IDEA specific files
+.idea/
+*.iml
+out/
+target/
+*.class
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Maven and Gradle specific files
+.mvn/
+.gradle/
+build/
+!gradle-wrapper.jar
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Bytecode and other binary files
+*.war
+*.ear
+*.jar
+
+# Generated files
+*.min.js
+*.min.css
+*.map
+*.d.ts
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# JetBrains specific directories
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# IntelliJ IDEA patch files
+__pycache__/
+
+# Ignore build artifacts
+bin/
+gen/
