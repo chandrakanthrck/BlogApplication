@@ -3,7 +3,9 @@ package com.codewithck.blog.BlogApplication.controllers;
 import com.codewithck.blog.BlogApplication.payload.ApiResponse;
 import com.codewithck.blog.BlogApplication.payload.UserDTO;
 import com.codewithck.blog.BlogApplication.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +25,13 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO savedUser = userService.createUser(userDTO);
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDto, @PathVariable Integer userId){
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDto, @PathVariable Integer userId){
         UserDTO updateUser = userService.updateUser(userDto, userId);
         return ResponseEntity.ok(updateUser);
     }
