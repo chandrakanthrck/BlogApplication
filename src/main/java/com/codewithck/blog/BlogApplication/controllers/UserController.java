@@ -16,6 +16,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Integer userId) {
+        UserDTO userDTO = userService.getUserById(userId);
+        return ResponseEntity.ok(userDTO);
+    }
+
     @PostMapping("/")
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
         UserDTO savedUser = userService.createUser(userDTO);
