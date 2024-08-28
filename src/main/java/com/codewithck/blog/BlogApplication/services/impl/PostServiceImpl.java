@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,23 +49,36 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(PostDTO postDTO, Integer postId) {
-        return null;
+    public PostDTO updatePost(PostDTO postDTO, Integer postId) {
+        Post post = postRepo.findById(postId).orElseThrow(()
+                -> new ResourceNotFoundException("Post", "Post Id", postId));
+        post.setTitle(postDTO.getTitle());
+        post.setContent(postDTO.getContent());
+        post.setImageName(postDTO.getImageName());
+        Post updatedPost = postRepo.save(post);
+        return modelMapper.map(updatedPost, PostDTO.class);
     }
 
     @Override
     public void deletePost(Integer postId) {
-
+        Post post = postRepo.findById(postId).orElseThrow(()
+                -> new ResourceNotFoundException("Post", "Post Id", postId));
+        postRepo.delete(post);
     }
 
     @Override
-    public List<Post> getAllPost() {
-        return null;
+    public List<PostDTO> getAllPost() {
+        List<Post> allPosts = postRepo.findAll();
+        List<PostDTO> allPostsDTO = allPosts.stream().map(post ->
+                modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+        return  allPostsDTO;
     }
 
     @Override
-    public Post getPostById(Integer postId) {
-        return null;
+    public PostDTO getPostById(Integer postId) {
+        Post postById = postRepo.findById(postId).orElseThrow(
+                () -> new ResourceNotFoundException("Post", "Post Id", postId));
+        return modelMapper.map(postById, PostDTO.class);
     }
 
     @Override
