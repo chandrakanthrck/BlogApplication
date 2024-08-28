@@ -1,6 +1,5 @@
 package com.codewithck.blog.BlogApplication.controllers;
 
-import com.codewithck.blog.BlogApplication.entities.Post;
 import com.codewithck.blog.BlogApplication.payload.ApiResponse;
 import com.codewithck.blog.BlogApplication.payload.PostDTO;
 import com.codewithck.blog.BlogApplication.services.PostService;
@@ -40,9 +39,12 @@ public class PostController {
     }
 
     //get all posts
+    //adding pagination
     @GetMapping("posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts(){
-        List<PostDTO> getPosts = postService.getAllPost();
+    public ResponseEntity<List<PostDTO>> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize){
+        List<PostDTO> getPosts = postService.getAllPost(pageNumber, pageSize);
         return new ResponseEntity<>(getPosts, HttpStatus.OK);
     }
 
