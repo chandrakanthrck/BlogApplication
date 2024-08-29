@@ -2,6 +2,7 @@ package com.codewithck.blog.BlogApplication.services;
 
 import com.codewithck.blog.BlogApplication.entities.Post;
 import com.codewithck.blog.BlogApplication.payload.PostDTO;
+import com.codewithck.blog.BlogApplication.payload.PostResponse;
 import com.codewithck.blog.BlogApplication.repository.PostRepo;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface PostService {
     //delete
     void deletePost(Integer postId);
     //get all posts
-    List<PostDTO> getAllPost(Integer pageNumber, Integer pageSize);
+    PostResponse getAllPost(Integer pageNumber, Integer pageSize);
     //get single post
     PostDTO getPostById(Integer postId);
     //get all post by category
