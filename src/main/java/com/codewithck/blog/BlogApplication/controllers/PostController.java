@@ -2,6 +2,7 @@ package com.codewithck.blog.BlogApplication.controllers;
 
 import com.codewithck.blog.BlogApplication.payload.ApiResponse;
 import com.codewithck.blog.BlogApplication.payload.PostDTO;
+import com.codewithck.blog.BlogApplication.payload.PostResponse;
 import com.codewithck.blog.BlogApplication.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,11 +42,11 @@ public class PostController {
     //get all posts
     //adding pagination
     @GetMapping("posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts(
-            @RequestParam(value = "pageNumber", defaultValue = "1", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize){
-        List<PostDTO> getPosts = postService.getAllPost(pageNumber, pageSize);
-        return new ResponseEntity<>(getPosts, HttpStatus.OK);
+    public ResponseEntity<PostResponse> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+        PostResponse postResponse = postService.getAllPost(pageNumber, pageSize);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
     //get post by postid

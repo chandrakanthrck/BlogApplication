@@ -5,6 +5,7 @@ import com.codewithck.blog.BlogApplication.entities.Post;
 import com.codewithck.blog.BlogApplication.entities.User;
 import com.codewithck.blog.BlogApplication.exceptions.ResourceNotFoundException;
 import com.codewithck.blog.BlogApplication.payload.PostDTO;
+import com.codewithck.blog.BlogApplication.payload.PostResponse;
 import com.codewithck.blog.BlogApplication.repository.CategoryRepo;
 import com.codewithck.blog.BlogApplication.repository.PostRepo;
 import com.codewithck.blog.BlogApplication.repository.UserRepo;
@@ -71,14 +72,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPost(Integer pageNumber, Integer pageSize) {
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
         //call pageable to get which page and page size
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<Post> pagePost = postRepo.findAll(pageable);
         List<Post> allPosts = pagePost.getContent();
         List<PostDTO> allPostsDTO = allPosts.stream().map(post ->
                 modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
-        return  allPostsDTO;
+        PostResponse postResponse = new PostResponse();
+        //setting post response
+        postResponse.setContent(allPostsDTO);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getNumberOfElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override
