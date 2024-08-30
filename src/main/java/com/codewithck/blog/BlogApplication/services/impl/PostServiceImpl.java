@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,24 +71,34 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
-        //call pageable to get which page and page size
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
+        // Determine the sort order based on the sortDir parameter
+        Sort sort = ((sortDir.equalsIgnoreCase("asc"))?
+                Sort.by(sortBy).ascending():Sort.by(sortBy).descending());
+
+        // Create Pageable object with the correct sort order
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        // Fetch paginated posts from the repository
         Page<Post> pagePost = postRepo.findAll(pageable);
-        List<Post> allPosts = pagePost.getContent();
-        List<PostDTO> allPostsDTO = allPosts.stream().map(post ->
-                modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+
+        // Convert Post entities to PostDTOs
+        List<PostDTO> allPostsDTO = pagePost.getContent().stream()
+                .map(post -> modelMapper.map(post, PostDTO.class))
+                .collect(Collectors.toList());
+
+        // Prepare the PostResponse object
         PostResponse postResponse = new PostResponse();
-        //setting post response
         postResponse.setContent(allPostsDTO);
         postResponse.setPageNumber(pagePost.getNumber());
         postResponse.setPageSize(pagePost.getSize());
-        postResponse.setTotalElements(pagePost.getNumberOfElements());
+        postResponse.setTotalElements((int) pagePost.getTotalElements()); // Fixed to get total elements in the page
         postResponse.setTotalPages(pagePost.getTotalPages());
         postResponse.setLastPage(pagePost.isLast());
 
         return postResponse;
     }
+
 
     @Override
     public PostDTO getPostById(Integer postId) {
