@@ -32,7 +32,6 @@ The application allows users to create, read, update, and delete blog posts, and
 git clone https://github.com/chandrakanthrck/BlogApplication.git
 cd BlogApplication
 ```
-
 Configure Database
 Update the database connection details in src/main/resources/application.properties:
 ```properties
