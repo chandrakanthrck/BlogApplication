@@ -1,7 +1,7 @@
 # Blog Application
 
 ## Overview
-This is a **Spring Boot** blog application project based on the tutorial by **Durgesh** on YouTube. The application allows users to create, read, update, and delete blog posts, and provides basic authentication for users.
+The application allows users to create, read, update, and delete blog posts, and provides basic authentication for users.
 
 ## Features
 - **User Management**: Register and manage users.
