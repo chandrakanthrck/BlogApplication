@@ -14,7 +14,6 @@ The application allows users to create, read, update, and delete blog posts, and
 ## Technologies Used
 - **Java 17**
 - **Spring Boot**
-- **Spring Security**
 - **Spring Data JPA**
 - **MySQL** (or any preferred database)
 - **Hibernate**
