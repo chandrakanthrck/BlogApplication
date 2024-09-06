@@ -31,7 +31,7 @@ The application allows users to create, read, update, and delete blog posts, and
 ### Clone the Repository
 ```bash
 git clone https://github.com/chandrakanthrck/BlogApplication.git
-cd blog-application
+cd BlogApplication
 ```
 
 Configure Database
